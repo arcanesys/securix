@@ -66,9 +66,7 @@
         sx = securixFor system;
       in
       {
-        packages = {
-          inherit (sx) shell;
-        };
+        packages = { inherit (sx) shell; };
 
         devShells.default = sx.shell;
 
