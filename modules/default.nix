@@ -4,6 +4,9 @@
 
 {
   imports = [
+    # Safe defaults for module args injected by lib.mkTerminal
+    ./module-args-defaults.nix
+
     # ANSSI compliance module
     ./anssi
 
