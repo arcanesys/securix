@@ -1,15 +1,14 @@
 # SPDX-FileCopyrightText: 2025 Ryan Lahfa <ryan.lahfa.ext@numerique.gouv.fr>
 #
 # SPDX-License-Identifier: MIT
-
 { pkgs, lib, ... }:
 {
   boot.initrd.systemd.enable = lib.mkDefault true;
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = lib.mkDefault false;
 
   boot.lanzaboote = {
-    enable = true;
+    enable = lib.mkDefault true;
     pkiBundle = "/etc/secureboot";
   };
 

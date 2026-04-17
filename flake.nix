@@ -79,7 +79,14 @@
       # NixOS modules available to any flake consumer (e.g. nixfleet mkHost)
       nixosModules = {
         # Sécurix base: all ANSSI hardening + user model + VPN + PAM + etc.
-        securix-base = ./modules;
+        securix-base = {
+          imports = [
+            inputs.lanzaboote.nixosModules.lanzaboote
+            "${inputs.agenix}/modules/age.nix"
+            "${inputs.disko}/module.nix"
+            ./modules
+          ];
+        };
 
         # Hardware profiles keyed by SKU (must match securix.self.machine.hardwareSKU)
         securix-hardware = builtins.listToAttrs (
