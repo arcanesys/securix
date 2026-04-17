@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025 Ryan Lahfa <ryan.lahfa.ext@numerique.gouv.fr>
 #
 # SPDX-License-Identifier: MIT
-
 {
   imports = [
     # Safe defaults for module args injected by lib.mkTerminal

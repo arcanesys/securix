@@ -27,46 +27,40 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-      ...
-    }@inputs:
-    let
-      # Re-use Sécurix's own default.nix. We pass `sources = inputs // npins`
-      # so flake inputs override npins defaults where present, and npins is
-      # the fallback for any source the flake doesn't provide (e.g. git-hooks).
-      securixFor =
-        system:
-        let
-          pkgs = import inputs.nixpkgs { inherit system; };
-          npins = import ./npins;
-        in
-        import ./. {
-          inherit pkgs;
-          sources = inputs // npins;
-        };
-
-      # Hardware SKUs exposed as individual modules
-      hardwareSKUs = [
-        "x280"
-        "elitebook645g11"
-        "elitebook850g8"
-        "latitude5340"
-        "t14g6"
-        "x9-15"
-        "e14-g7"
-      ];
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+    ...
+  } @ inputs: let
+    # Re-use Sécurix's own default.nix. We pass `sources = inputs // npins`
+    # so flake inputs override npins defaults where present, and npins is
+    # the fallback for any source the flake doesn't provide (e.g. git-hooks).
+    securixFor = system: let
+      pkgs = import inputs.nixpkgs {inherit system;};
+      npins = import ./npins;
     in
+      import ./. {
+        inherit pkgs;
+        sources = inputs // npins;
+      };
+
+    # Hardware SKUs exposed as individual modules
+    hardwareSKUs = [
+      "x280"
+      "elitebook645g11"
+      "elitebook850g8"
+      "latitude5340"
+      "t14g6"
+      "x9-15"
+      "e14-g7"
+    ];
+  in
     flake-utils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         sx = securixFor system;
-      in
-      {
-        packages = { inherit (sx) shell; };
+      in {
+        packages = {inherit (sx) shell;};
 
         devShells.default = sx.shell;
 
@@ -93,7 +87,8 @@
           map (sku: {
             name = sku;
             value = ./hardware/${sku}.nix;
-          }) hardwareSKUs
+          })
+          hardwareSKUs
         );
 
         # Aggregate: all hardware profiles

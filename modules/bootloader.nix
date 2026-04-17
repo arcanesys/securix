@@ -1,9 +1,11 @@
 # SPDX-FileCopyrightText: 2025 Ryan Lahfa <ryan.lahfa.ext@numerique.gouv.fr>
 #
 # SPDX-License-Identifier: MIT
-
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   boot.initrd.systemd.enable = lib.mkDefault true;
 
   boot.loader.systemd-boot.enable = lib.mkDefault false;
@@ -13,5 +15,5 @@
     pkiBundle = "/etc/secureboot";
   };
 
-  environment.systemPackages = [ pkgs.sbctl ];
+  environment.systemPackages = [pkgs.sbctl];
 }
