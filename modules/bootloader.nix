@@ -6,10 +6,10 @@
 {
   boot.initrd.systemd.enable = lib.mkDefault true;
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = lib.mkDefault false;
 
   boot.lanzaboote = {
-    enable = true;
+    enable = lib.mkDefault true;
     pkiBundle = "/etc/secureboot";
   };
 
